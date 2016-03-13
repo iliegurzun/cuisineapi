@@ -17,6 +17,11 @@ DirectoryIndex app.php
     Options -MultiViews
 </IfModule>
 
+<FilesMatch "\.(csv)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
@@ -66,7 +71,3 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
-<Files ~ "\.csv">
-    Order allow,deny
-    Deny from all
-</Files>
