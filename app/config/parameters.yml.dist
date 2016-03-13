@@ -17,4 +17,5 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
-    csv_file:          "Gousto Engineering Test - Input - Sheet1 (2).csv"
+    csv_file: "Gousto Engineering Test - Input - Sheet1 (2).csv"
+    rating_csv_file: "Ratings.csv"
