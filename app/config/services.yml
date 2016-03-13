@@ -9,6 +9,7 @@ services:
         calls:
             - [setFilename, [%csv_file%]]
             - [setSerializer, [@jms_serializer]]
+            - [setRatingFilename, [%rating_csv_file%]]
             - [init, []]
 
     app.recipe_service:

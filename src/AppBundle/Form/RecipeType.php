@@ -11,10 +11,6 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 
 class RecipeType extends AbstractType
@@ -51,7 +47,8 @@ class RecipeType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'        => 'AppBundle\Model\Recipe',
-            'csrf_protection'   => false
+            'csrf_protection'   => false,
+            'allow_extra_fields'=> true
         ));
     }
 

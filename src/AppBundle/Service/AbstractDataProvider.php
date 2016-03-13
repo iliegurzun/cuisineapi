@@ -9,6 +9,7 @@
 namespace AppBundle\Service;
 
 
+use AppBundle\Model\Rating;
 use AppBundle\Model\Recipe;
 use JMS\Serializer\Serializer;
 
@@ -44,7 +45,7 @@ abstract class AbstractDataProvider
 
     abstract public function addRecipe(Recipe $recipe);
 
-    abstract public function rateRecipe(Recipe $recipe, $score);
+    abstract public function rateRecipe(Rating $rating);
 
     abstract public function updateRecipe(Recipe $recipe);
 }

@@ -5,7 +5,7 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="bootstrap.php.cache"
+         bootstrap="bootstrap_test.php.cache"
 >
     <php>
         <ini name="error_reporting" value="-1" />
@@ -35,4 +35,8 @@
             </exclude>
         </whitelist>
     </filter>
+
+    <php>
+        <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
+    </php>
 </phpunit>

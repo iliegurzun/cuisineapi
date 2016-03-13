@@ -17,6 +17,10 @@ class RecipeService extends AbstractRecipeService
     /** @const string */
     const SERVICE_NAME = 'app.recipe_service';
 
+    /**
+     * @param array $params
+     * @return ArrayCollection
+     */
     public function findPaginated($params)
     {
         /** @var ArrayCollection $recipes */

@@ -8,6 +8,7 @@
 
 namespace AppBundle\Model;
 
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Rating
 {
@@ -22,7 +23,11 @@ class Rating
     protected $recipe;
 
     /**
-     * @var int
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 5,
+     *      invalidMessage = "This value should be 5 or less",
+     * )
      */
     protected $score;
 

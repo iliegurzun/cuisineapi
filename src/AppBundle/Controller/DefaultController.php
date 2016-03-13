@@ -2,15 +2,17 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\RatingType;
 use AppBundle\Form\RecipeType;
+use AppBundle\Model\Rating;
 use AppBundle\Model\Recipe;
 use AppBundle\Service\RecipeService;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DefaultController extends Controller
+class DefaultController extends FOSRestController
 {
     /**
      * @Rest\Get
@@ -25,12 +27,13 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/api/find/{cuisine}.{_format}", name="find_by_cuisine")
      * @param string  $cuisine
      * @param Request $request
      * @return array|Recipe[]
      * @Rest\Post
      */
-    public function findByCuisineAction($cuisine, Request $request)
+    public function findRecipesAction($cuisine, Request $request)
     {
         /** @var RecipeService $service */
         $service = $this->get(RecipeService::SERVICE_NAME);
@@ -69,7 +72,7 @@ class DefaultController extends Controller
      * @param int     $id
      * @param Request $request
      * @return Recipe|\Symfony\Component\Form\Form
-     * @Rest\Post
+     * @Rest\Patch
      */
     public function updateRecipeAction($id, Request $request)
     {
@@ -80,6 +83,7 @@ class DefaultController extends Controller
             throw $this->createNotFoundException(sprintf('Recipe with id "%s" does not exist!', $id));
         }
         $form = $this->createForm(new RecipeType(), $recipe);
+        $form->submit($request->request->get('recipe'));
         $form->handleRequest($request);
         if ($form->isValid()) {
             $service->updateRecipe($recipe);
@@ -90,8 +94,30 @@ class DefaultController extends Controller
         return $form;
     }
 
-    public function rateRecipeAction($id)
+    /**
+     * @param int     $id
+     * @param Request $request
+     * @return Recipe|\Symfony\Component\Form\Form
+     * @Rest\Post
+     */
+    public function rateRecipeAction($id, Request $request)
     {
+        /** @var RecipeService $service */
+        $service = $this->get(RecipeService::SERVICE_NAME);
+        $recipe = $service->findById($id);
+        if (!$recipe instanceof Recipe) {
+            throw $this->createNotFoundException(sprintf('Recipe with id "%s" does not exist!', $id));
+        }
+        $rating = new Rating();
+        $rating->setRecipe($recipe);
+        $form = $this->createForm(new RatingType(), $rating);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $service->rateRecipe($rating);
 
+            return $rating;
+        }
+
+        return $form;
     }
 }

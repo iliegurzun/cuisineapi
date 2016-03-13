@@ -8,6 +8,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Model\Rating;
 use AppBundle\Model\Recipe;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -93,5 +94,10 @@ abstract class AbstractRecipeService
     public function updateRecipe(Recipe $recipe)
     {
         $this->getDataProvider()->updateRecipe($recipe);
+    }
+
+    public function rateRecipe(Rating $rating)
+    {
+        $this->getDataProvider()->rateRecipe($rating);
     }
 }
